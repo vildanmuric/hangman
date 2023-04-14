@@ -3,6 +3,7 @@ const rijec = rijeci[(Math.floor(Math.random()*rijeci.length))];
 const maxMistakes = 5;
 var mistakes = 1;
 var correctAnswers = 0;
+var foundLetters = [];
 
 
 function main(){
@@ -31,19 +32,26 @@ function displayTextFields(){
 function checkLetters(){
     let letterFound = false;
     let inputLetter = document.getElementById('input').value;
+    duplicateLetter = false;
+    if (foundLetters.includes(inputLetter)){
+        duplicateLetter = true;
+    }
     allTextFields.forEach(textField=>{
-        if (textField.getAttribute('data-letter') === inputLetter){
-            textField.innerHTML = inputLetter;
-            letterFound = true;
-            correctAnswers+=1;
+        if (textField.getAttribute('data-letter') === inputLetter && !duplicateLetter){
+                textField.innerHTML = inputLetter;
+                letterFound = true;
+                correctAnswers+=1;
+                document.getElementById('input').value = '';
+                foundLetters.push(inputLetter);
         }
     });
-        if (!letterFound) {
+        if (!letterFound && !duplicateLetter) {
             mistakes +=1;
             gameStateHtml = `<div class="row">
                                 <div class="col-1"><img src="${mistakes}.png" alt=""></div>
                             </div>`
             document.getElementById('game-state-handler').innerHTML = gameStateHtml;
+            document.getElementById('input').value = '';
         }
         if (mistakes==maxMistakes){
             gameStateHtml = `<div class="row">
