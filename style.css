@@ -1,0 +1,9 @@
+body{
+    background-color:green !important;
+    color: white !important;
+}
+
+.game-state-handler{
+    margin-top:-4.5em;
+    margin-left:3em;
+}
